@@ -1933,20 +1933,19 @@
 
 (rum/defc block-refs-count < rum/reactive db-mixins/query
   [block]
-  ;; (let [block-refs-count (model/get-block-refs-count (:db/id block))]
-  ;;   (when (and block-refs-count (> block-refs-count 0))
-  ;;     [:div
-  ;;      [:a.open-block-ref-link.bg-base-2.text-sm.ml-2.fade-link
-  ;;       {:title "Open block references"
-  ;;        :style {:margin-top -1}
-  ;;        :on-click (fn []
-  ;;                    (state/sidebar-add-block!
-  ;;                     (state/get-current-repo)
-  ;;                     (:db/id block)
-  ;;                     :block-ref
-  ;;                     {:block block}))}
-  ;;       block-refs-count]]))
-  )
+  (let [block-refs-count (model/get-block-refs-count (:db/id block))]
+    (when (and block-refs-count (> block-refs-count 0))
+      [:div
+       [:a.open-block-ref-link.bg-base-2.text-sm.ml-2.fade-link
+        {:title "Open block references"
+         :style {:margin-top -1}
+         :on-click (fn []
+                     (state/sidebar-add-block!
+                      (state/get-current-repo)
+                      (:db/id block)
+                      :block-ref
+                      {:block block}))}
+        block-refs-count]])))
 
 (rum/defc block-content-or-editor < rum/reactive
   [config {:block/keys [uuid format] :as block} edit-input-id block-id heading-level edit?]
